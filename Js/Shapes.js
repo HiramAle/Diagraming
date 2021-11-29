@@ -66,10 +66,6 @@ Variable.prototype.draw = function (ctx) {
     ctx.stroke();
 };
 
-function Link(start_shape, end_shape) {
-    this.start_shape = start_shape;
-    this.end_shape = end_shape;
-}
 
 function DataInput(x, y) {
     Shape.call(this, x, y);
@@ -161,7 +157,10 @@ Assignment.prototype.draw = function (ctx){
     ctx.stroke();
 }
 
-
+function Link(start_shape, end_shape) {
+    this.start_shape = start_shape;
+    this.end_shape = end_shape;
+}
 
 Link.prototype.draw = function (ctx) {
     let start_x;
