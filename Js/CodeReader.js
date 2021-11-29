@@ -1,8 +1,5 @@
-let myCodeMirror = CodeMirror.fromTextArea(document.getElementById("codeArea"),{
-    mode: "text/x-csrc",
-    lineNumbers : true,
-    readOnly: true
-});
+
+
 function readGraph() {
     let actual_shape;
     let queue = [];
@@ -31,26 +28,29 @@ function readGraph() {
 
 function createCode(code) {
     let codeArea = document.getElementById("codeArea");
-    myCodeMirror.getDoc().setValue("");
+    codeArea.innerHTML = "";
     let actual_shape;
-    let segment;
+    let segment = "";
     while (code.length > 0) {
         actual_shape = code[0];
         if (actual_shape instanceof Start) {
             segment = "#include <stdio.h>\n" +
                 "int main (int argc,char **argv)\n" +
-                "{\n \t";
+                "{\n";
         }
         if (actual_shape instanceof Variable) {
             segment = actual_shape.text + ";\n";
         }
         if (actual_shape instanceof DataInput) {
-            segment = "scanf();"
+            segment = "scanf();\n"
         }
         if (actual_shape instanceof DataOutput) {
-            segment = "printf(" + actual_shape.text + ");";
+            segment = "printf(" + actual_shape.text + ");\n";
         }
-        myCodeMirror.getDoc().setValue(myCodeMirror.getDoc().getValue() + segment);
+        if (actual_shape instanceof DataOutput) {
+            segment = "printf(" + actual_shape.text + ");\n";
+        }
+        codeArea.innerHTML += segment;
         code.shift();
     }
 }

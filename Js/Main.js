@@ -68,7 +68,7 @@ function editShape(e) {
         document.getElementById("cancel_btn").style.display = "inline-flex";
         document.getElementById("bg_color").value = shape.bg_color;
         document.getElementById("text").value = shape.text;
-        readGraph();
+
     }
 }
 
@@ -113,7 +113,7 @@ function reDraw() {
     for (let i = 0; i < shapes.length; i++) {
         shapes[i].draw(context);
     }
-
+    // readGraph();
 }
 
 function clearCanvas() {

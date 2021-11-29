@@ -22,7 +22,8 @@
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-save"></i>&nbsp;Guardar</a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-upload"type="file"></i>&nbsp;Subir</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-upload"
+                                                                     type="file"></i>&nbsp;Subir</a></li>
             </ul>
         </div>
     </div>
@@ -32,44 +33,53 @@
         <div class="divBarra">
             <p class="encabezadoHerramienta">Figuras</p>
             <hr>
-            <button class="btn btn-primary btnSimbolo" type="button" onclick="canvas.onclick = drawStart"><img class="iconButton"
-                                                                          src="Assets/img/inicio_blanco.svg">
+            <button class="btn btn-primary btnSimbolo" type="button" onclick="canvas.onclick = drawStart"><img
+                    class="iconButton"
+                    src="Assets/img/inicio_blanco.svg">
             </button>
-            <button class="btn btn-primary btnSimbolo" type="button" onclick="canvas.onclick = drawDataInput"><img class="iconButton"
-                                                                          src="Assets/img/entrada_blanco.svg">
+            <button class="btn btn-primary btnSimbolo" type="button" onclick="canvas.onclick = drawDataInput"><img
+                    class="iconButton"
+                    src="Assets/img/entrada_blanco.svg">
             </button>
-            <button class="btn btn-primary btnSimbolo" type="button" onclick="canvas.onclick = drawAssignment"><img class="iconButton"
-                                                                          src="Assets/img/rectangulo_blanco.svg">
+            <button class="btn btn-primary btnSimbolo" type="button" onclick="canvas.onclick = drawAssignment"><img
+                    class="iconButton"
+                    src="Assets/img/rectangulo_blanco.svg">
             </button>
-            <button class="btn btn-primary btnSimbolo" type="button" onclick="canvas.onclick = drawDataOutput"><img class="iconButton"
-                                                                          src="Assets/img/salida_blanco.svg">
+            <button class="btn btn-primary btnSimbolo" type="button" onclick="canvas.onclick = drawDataOutput"><img
+                    class="iconButton"
+                    src="Assets/img/salida_blanco.svg">
             </button>
-            <button class="btn btn-primary btnSimbolo" type="button" onclick="canvas.onclick = drawVariable"><img class="iconButton"
-                                                                          src="Assets/img/variales_blanco.svg">
+            <button class="btn btn-primary btnSimbolo" type="button" onclick="canvas.onclick = drawVariable"><img
+                    class="iconButton"
+                    src="Assets/img/variales_blanco.svg">
             </button>
             <button class="btn btn-primary btnSimbolo" type="button" onclick="canvas.onclick = startLink">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" style="width: 38px;height: 23px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none"
+                     style="width: 38px;height: 23px;">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                           d="M18.73 7.75739L22.9798 11.9929L18.7443 16.2426L17.3277 14.8308L19.142 13.0103L6.85364 13.0525C6.44678 14.219 5.33954 15.0584 4.03368 15.0642C2.37684 15.0717 1.02767 13.7346 1.02023 12.0777C1.01279 10.4209 2.34989 9.07173 4.00673 9.06429C5.31328 9.05842 6.4285 9.88867 6.84531 11.0525L19.1607 11.0103L17.3182 9.17398L18.73 7.75739ZM5.02019 12.0598C5.01771 11.5075 4.56799 11.0618 4.01571 11.0643C3.46343 11.0667 3.01773 11.5165 3.02021 12.0687C3.02269 12.621 3.47242 13.0667 4.02469 13.0642C4.57697 13.0618 5.02267 12.612 5.02019 12.0598Z"
                           fill="currentColor"></path>
                 </svg>
             </button>
             <p class="encabezadoHerramienta">Editar elemento</p>
-                <hr>
-                    <button class="btn btn-primary btnSimbolo" type="button" onclick="canvas.onclick = editShape">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-hand-index-thumb" style="width: 38px;height: 23px;">
-                            <path d="M6.75 1a.75.75 0 0 1 .75.75V8a.5.5 0 0 0 1 0V5.467l.086-.004c.317-.012.637-.008.816.027.134.027.294.096.448.182.077.042.15.147.15.314V8a.5.5 0 0 0 1 0V6.435l.106-.01c.316-.024.584-.01.708.04.118.046.3.207.486.43.081.096.15.19.2.259V8.5a.5.5 0 1 0 1 0v-1h.342a1 1 0 0 1 .995 1.1l-.271 2.715a2.5 2.5 0 0 1-.317.991l-1.395 2.442a.5.5 0 0 1-.434.252H6.118a.5.5 0 0 1-.447-.276l-1.232-2.465-2.512-4.185a.517.517 0 0 1 .809-.631l2.41 2.41A.5.5 0 0 0 6 9.5V1.75A.75.75 0 0 1 6.75 1zM8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v6.543L3.443 6.736A1.517 1.517 0 0 0 1.07 8.588l2.491 4.153 1.215 2.43A1.5 1.5 0 0 0 6.118 16h6.302a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.271-2.715a2 2 0 0 0-1.99-2.199h-.581a5.114 5.114 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.632 2.632 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046l-.048.002zm2.094 2.025z"></path>
-                        </svg>
-                    </button>
-                    <input type="color" class="colorInput oculto" id="bg_color">
+            <hr>
+            <button class="btn btn-primary btnSimbolo" type="button" onclick="canvas.onclick = editShape">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"
+                     class="bi bi-hand-index-thumb" style="width: 38px;height: 23px;">
+                    <path d="M6.75 1a.75.75 0 0 1 .75.75V8a.5.5 0 0 0 1 0V5.467l.086-.004c.317-.012.637-.008.816.027.134.027.294.096.448.182.077.042.15.147.15.314V8a.5.5 0 0 0 1 0V6.435l.106-.01c.316-.024.584-.01.708.04.118.046.3.207.486.43.081.096.15.19.2.259V8.5a.5.5 0 1 0 1 0v-1h.342a1 1 0 0 1 .995 1.1l-.271 2.715a2.5 2.5 0 0 1-.317.991l-1.395 2.442a.5.5 0 0 1-.434.252H6.118a.5.5 0 0 1-.447-.276l-1.232-2.465-2.512-4.185a.517.517 0 0 1 .809-.631l2.41 2.41A.5.5 0 0 0 6 9.5V1.75A.75.75 0 0 1 6.75 1zM8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v6.543L3.443 6.736A1.517 1.517 0 0 0 1.07 8.588l2.491 4.153 1.215 2.43A1.5 1.5 0 0 0 6.118 16h6.302a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.271-2.715a2 2 0 0 0-1.99-2.199h-.581a5.114 5.114 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.632 2.632 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046l-.048.002zm2.094 2.025z"></path>
+                </svg>
+            </button>
+            <input type="color" class="colorInput oculto" id="bg_color">
 
-                <input type="text" class="oculto"  id="text" style="width: 145px;margin-left: 14%;margin-bottom: 5%;">
-                <button class="btn btn-primary btnSimbolo oculto" type="button" id="save_btn" onclick="saveEdit()">Save</button>
-                <button class="btn btn-primary btnSimbolo oculto" type="button"  id="cancel_btn" onclick="cancelEdit()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-x" style="width: 38px;height: 23px;">
-                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
-                    </svg>
-                </button>
+            <input type="text" class="oculto" id="text" style="width: 145px;margin-left: 14%;margin-bottom: 5%;">
+            <button class="btn btn-primary btnSimbolo oculto" type="button" id="save_btn" onclick="saveEdit()">Save
+            </button>
+            <button class="btn btn-primary btnSimbolo oculto" type="button" id="cancel_btn" onclick="cancelEdit()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16"
+                     class="bi bi-x" style="width: 38px;height: 23px;">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
+                </svg>
+            </button>
             <p class="encabezadoHerramienta ">Extras</p>
             <hr>
             <button class="btn btn-primary btnSimbolo" type="button">
@@ -78,35 +88,39 @@
                     <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"></path>
                 </svg>
             </button>
-            <button class="btn btn-primary btnSimbolo" type="button" onclick="readGraph()">Limpiar Pantalla</button>
+            <button class="btn btn-primary btnSimbolo" type="button">Limpiar Pantalla</button>
         </div>
     </div>
     <div class="col-lg-9">
         <div class="container containerDibujo">
             <div>
-                <canvas id="main-canvas" >
+                <canvas id="main-canvas">
 
                 </canvas>
             </div>
             <div>
-                <textarea readonly id="codeArea">
+                <pre class="prettyprint" id="codeArea">
 
-                </textarea>
+                </pre>
             </div>
         </div>
     </div>
 </div>
 
 </body>
-<script src="Assets/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="Js/Math.js"></script>
+<script src=" Assets/bootstrap/js/bootstrap.min.js"></script>
+                    <script type="text/javascript" src="Js/Math.js"></script>
 <script type="text/javascript" src="Js/Shapes.js"></script>
 <script type="text/javascript" src="Js/Link.js"></script>
 <script type="text/javascript" src="Js/Drag.js"></script>
 <script type="text/javascript" src="Js/Main.js"></script>
-<script src="CodeMirror/lib/codemirror.js"></script>
-<link rel="stylesheet" href="CodeMirror/lib/codemirror.css">
-<script src="CodeMirror/mode/javascript/javascript.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+<script src="https://cdn.rawgit.com/beautify-web/js-beautify/v1.14.0/js/lib/beautify.js"></script>
+<script src="https://cdn.rawgit.com/beautify-web/js-beautify/v1.14.0/js/lib/beautify-css.js"></script>
+<script src="https://cdn.rawgit.com/beautify-web/js-beautify/v1.14.0/js/lib/beautify-html.js"></script>
+
+
 <script type="text/javascript" src="Js/CodeReader.js"></script>
 
 </html>
