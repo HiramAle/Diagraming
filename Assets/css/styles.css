@@ -1,0 +1,67 @@
+.divBarra {
+    height: 100%;
+    background: #555555;
+}
+
+.containerDibujo {
+    height: 100%;
+}
+
+.tituloPrincipal {
+    text-align: center;
+    padding: 10px;
+    color: white;
+    margin: 0px;
+    font-size: x-large;
+}
+
+.encabezadoHerramienta {
+    color: white;
+    font-size: large;
+    padding-left: 30px;
+    padding-top: 30px;
+    padding-bottom: 0px;
+}
+
+hr {
+    color: white;
+    height: 3px;
+    width: 80%;
+    margin-left: 30px;
+    margin-top: 0px;
+}
+
+.iconButton {
+    width: 40px;
+    height: 20px;
+}
+
+.btnSimbolo {
+    padding-left: 10px;
+    background: linear-gradient(120deg, #00e4d0, #5983e8);
+    margin-left: 15%;
+    margin-bottom: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: none;
+}
+
+.colorInput {
+    margin-left: 15%;
+    border: none;
+    width: 55px;
+    margin-bottom: 10px;
+    color: #5983e8;
+}
+
+.inputfile:before {
+    content: 'Subir';
+}
+canvas {
+    background-color: grey;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+}
