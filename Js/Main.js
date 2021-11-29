@@ -62,10 +62,10 @@ function editShape(e) {
     }
     reDraw();
     if (shape){
-        document.getElementById("bg_color").style.display = "block";
-        document.getElementById("text").style.display = "block";
-        document.getElementById("save_btn").style.display = "block";
-        document.getElementById("cancel_btn").style.display = "block";
+        document.getElementById("bg_color").style.display = "inline-flex";
+        document.getElementById("text").style.display = "inline-flex";
+        document.getElementById("save_btn").style.display = "inline-flex";
+        document.getElementById("cancel_btn").style.display = "inline-flex";
         document.getElementById("bg_color").value = shape.bg_color;
         document.getElementById("text").value = shape.text;
     }
