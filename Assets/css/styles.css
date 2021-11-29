@@ -58,6 +58,7 @@ hr {
 .inputfile:before {
     content: 'Subir';
 }
+
 canvas {
     background-color: grey;
 }
