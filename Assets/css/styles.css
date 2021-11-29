@@ -55,13 +55,27 @@ hr {
     color: #5983e8;
 }
 
-.inputfile:before {
-    content: 'Subir';
+.inputfile {
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -0.5;
 }
+
+.inputfile + label {
+    color: rgba(255,255,255,.75);
+    background-color: rgba(red, green, blue, 0);
+    display: flex;
+    padding-top: 8px;
+}
+
 
 canvas {
     background-color: grey;
 }
+
 html, body {
     width: 100%;
     height: 100%;
