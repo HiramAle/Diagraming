@@ -10,8 +10,8 @@ canvas.onmousedown = mouseDown;
 canvas.onmouseup = mouseUp;
 canvas.onmousemove = mouseMove;
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = window.innerWidth * .6;
+canvas.height = window.innerHeight * .8;
 
 function mouseInShape(shape, mx, my) {
     if (shape instanceof Start) {
