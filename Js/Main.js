@@ -68,6 +68,7 @@ function editShape(e) {
         document.getElementById("cancel_btn").style.display = "inline-flex";
         document.getElementById("bg_color").value = shape.bg_color;
         document.getElementById("text").value = shape.text;
+        readGraph();
     }
 }
 
@@ -112,6 +113,7 @@ function reDraw() {
     for (let i = 0; i < shapes.length; i++) {
         shapes[i].draw(context);
     }
+
 }
 
 function clearCanvas() {
@@ -134,7 +136,9 @@ function endLink(e) {
     x_cord = e.clientX - x_offset;
     y_cord = e.clientY - y_offset;
     let link_shapes = [];
-
+    let shapes_indexes = [];
+    let s_i;
+    let e_i;
     for (let i = 0; i < shapes.length; i++) {
         if (mouseInShape(shapes[i], x_cord, y_cord)) {
             shapes[i].selected = true;
@@ -144,8 +148,15 @@ function endLink(e) {
     for (let i = 0; i < shapes.length; i++) {
         if (shapes[i].selected) {
             link_shapes.push(shapes[i]);
+            shapes_indexes.push(i);
         }
     }
+
+    s_i = shapes_indexes[0];
+    e_i = shapes_indexes[1];
+
+    shapes[s_i].adj_shapes.push(link_shapes[1]);
+    shapes[e_i].adj_shapes.push(link_shapes[0]);
 
     let con = new Link(link_shapes[0], link_shapes[1]);
     con.draw(context);

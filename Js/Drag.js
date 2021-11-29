@@ -75,7 +75,6 @@ function mouseMove(e) {
                 shapes[i].y += dy;
             }
         }
-        console.log(mx)
         reDraw();
         startX = mx;
         startY = my;

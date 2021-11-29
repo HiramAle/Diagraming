@@ -168,8 +168,8 @@ Link.prototype.draw = function (ctx) {
     let end_x;
     let end_y;
 
-    this.start_shape.adj_shapes.push(this.end_shape);
-    this.end_shape.adj_shapes.push(this.start_shape);
+    // this.start_shape.adj_shapes.push(this.end_shape);
+    // this.end_shape.adj_shapes.push(this.start_shape);
 
     start_x = this.start_shape.x;
     start_y = this.start_shape.y;
@@ -177,8 +177,6 @@ Link.prototype.draw = function (ctx) {
     end_y = this.end_shape.y;
 
     ctx.beginPath();
-    console.log(start_x, start_y);
-    console.log(end_x, end_y);
     ctx.moveTo(start_x, start_y);
     ctx.lineTo(end_x, end_y);
     ctx.stroke();
