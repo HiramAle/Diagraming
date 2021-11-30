@@ -1,5 +1,3 @@
-
-
 function readGraph() {
     let actual_shape;
     let queue = [];
@@ -30,7 +28,7 @@ function createCode(code) {
     let codeArea = document.getElementById("codeArea");
     codeArea.innerHTML = "";
     let actual_shape;
-    let segment = "";
+    let segment;
     while (code.length > 0) {
         actual_shape = code[0];
         if (actual_shape instanceof Start) {
@@ -50,7 +48,10 @@ function createCode(code) {
         if (actual_shape instanceof DataOutput) {
             segment = "printf(" + actual_shape.text + ");\n";
         }
-        codeArea.innerHTML += segment;
+        if (segment != null){
+            codeArea.innerHTML += segment;
+        }
+        hljs.highlightAll();
         code.shift();
     }
 }

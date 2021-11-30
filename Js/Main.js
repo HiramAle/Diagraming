@@ -4,6 +4,7 @@ let shapes = [];
 let connectors = [];
 
 
+
 function drawStart(e) {
     x_cord = e.clientX - x_offset;
     y_cord = e.clientY - y_offset;
