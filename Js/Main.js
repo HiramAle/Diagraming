@@ -1,8 +1,19 @@
 let x_cord = 0;
 let y_cord = 0;
-let shapes = [];
+
 let connectors = [];
 
+function printConnector() {
+    for (let i = 0; i < connectors.length; i++) {
+        console.log((i + 1) + " " + connectors[i].start_shape.text + " -> " + connectors[i].end_shape.text);
+    }
+}
+
+function printShapes() {
+    for (let i = 0; i < shapes.length; i++) {
+        console.log((i + 1) + " " + shapes[i].text);
+    }
+}
 
 function drawStart(e) {
     x_cord = e.clientX - x_offset;
@@ -54,6 +65,15 @@ function drawAssignment(e) {
     y_cord = e.clientY - y_offset;
     canvas.onclick = null;
     let shape = new Assignment(x_cord, y_cord);
+    shape.draw(context);
+    shapes.push(shape);
+}
+
+function drawIf(e) {
+    x_cord = e.clientX - x_offset;
+    y_cord = e.clientY - y_offset;
+    canvas.onclick = null;
+    let shape = new IfShape(x_cord, y_cord);
     shape.draw(context);
     shapes.push(shape);
 }
@@ -130,14 +150,16 @@ function eraseShape(e) {
     y_cord = e.clientY - y_offset;
     let delShape;
     let index;
+    //Get the shape to erase and the index in the array
     for (let i = 0; i < shapes.length; i++) {
         if (mouseInShape(shapes[i], x_cord, y_cord)) {
             delShape = shapes[i];
             index = i;
-            shapes.splice(i, 1);
         }
     }
-
+    //Delete the shape
+    shapes.splice(index, 1);
+    //Delete the shape in the adj list of all the shapes
     for (let i = 0; i < shapes.length; i++) {
         for (let j = 0; j < shapes[i].adj_shapes.length; j++) {
             if (Object.is(shapes[i].adj_shapes[j], delShape)) {
@@ -145,26 +167,24 @@ function eraseShape(e) {
             }
         }
     }
-
-    let indexesCon = [];
+    //Get the indexes of the connectors with the shape
+    let delConn = [];
     for (let i = 0; i < connectors.length; i++) {
         if (Object.is(connectors[i].start_shape, delShape)) {
-            indexesCon.push(i);
-        }else if (Object.is(connectors[i].end_shape, delShape)) {
-            indexesCon.push(i);
+            delConn.push(connectors[i]);
+        }
+        if (Object.is(connectors[i].end_shape, delShape)) {
+            delConn.push(connectors[i]);
         }
     }
-
-    for (let i = 0; i < indexesCon.length; i++) {
-        console.log(i + 1 + " " + connectors[indexesCon[i]].start_shape.text + " -> " + connectors[indexesCon[i]].end_shape.text);
-        connectors.splice(indexesCon[i]);
+    //Delete the connectors of the shape
+    while (delConn.length > 0) {
+        for (let i = 0; i < connectors.length; i++) {
+            connectors.splice(connectors.indexOf(delConn.pop()), 1);
+        }
     }
-
-
+    //Update the canvas
     reDraw();
-
-
-
 }
 
 function reDraw() {
@@ -183,16 +203,53 @@ function clearCanvas() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+let linkinTrue = false;
+let linkinFalse = false;
+let s_i;
+let e_i;
+
 function startLink(e) {
     x_cord = e.clientX - x_offset;
     y_cord = e.clientY - y_offset;
+    let linkin = false;
     for (let i = 0; i < shapes.length; i++) {
         if (mouseInShape(shapes[i], x_cord, y_cord)) {
-            shapes[i].selected = true;
+            //Case linkin IfShape
+            if (shapes[i] instanceof IfShape) {
+                if (ifLinkTrue(shapes[i], x_cord, y_cord)) {
+                    if (shapes[i].trueValue == null) {
+                        console.log("True");
+                        linkinTrue = true;
+                        linkin = true;
+                        shapes[i].selected = true;
+                        s_i = i;
+                    }
+                }
+                if (ifLinkFalse(shapes[i], x_cord, y_cord)) {
+                    if (shapes[i].falseValue == null) {
+                        console.log("False");
+                        linkinFalse = true;
+                        linkin = true;
+                        shapes[i].selected = true;
+                        s_i = i;
+                    }
+                }
+            } else {
+                //Normal Linkin
+                linkin = true;
+                shapes[i].selected = true;
+                s_i = i;
+            }
+
         }
     }
     reDraw();
-    canvas.onclick = endLink;
+    if (linkin) {
+        canvas.onclick = endLink;
+    } else {
+        canvas.onclick = null;
+    }
+
 }
 
 function endLink(e) {
@@ -200,31 +257,46 @@ function endLink(e) {
     y_cord = e.clientY - y_offset;
     let link_shapes = [];
     let shapes_indexes = [];
-    let s_i;
-    let e_i;
     let linkin;
     for (let i = 0; i < shapes.length; i++) {
         if (mouseInShape(shapes[i], x_cord, y_cord)) {
             shapes[i].selected = true;
             linkin = true;
+            e_i = i;
         }
     }
 
-    if(linkin){
-        for (let i = 0; i < shapes.length; i++) {
-            if (shapes[i].selected) {
-                link_shapes.push(shapes[i]);
-                shapes_indexes.push(i);
-            }
+    if (linkin) {
+        // for (let i = 0; i < shapes.length; i++) {
+        //     if (shapes[i].selected) {
+        //         link_shapes.push(shapes[i]);
+        //         shapes_indexes.push(i);
+        //     }
+        // }
+        //
+        // s_i = shapes_indexes[0];
+        // e_i = shapes_indexes[1];
+
+        // Ifcase
+        if (linkinTrue) {
+            shapes[s_i].trueValue = shapes[e_i];
+            console.log(shapes[s_i].trueValue.text)
+            linkinTrue = false;
         }
 
-        s_i = shapes_indexes[0];
-        e_i = shapes_indexes[1];
+        if (linkinFalse) {
+            shapes[s_i].falseValue = shapes[e_i];
+            console.log(shapes[s_i].falseValue.text)
+            linkinFalse = false;
+        }
 
-        shapes[s_i].adj_shapes.push(link_shapes[1]);
-        shapes[e_i].adj_shapes.push(link_shapes[0]);
+        shapes[s_i].adj_shapes.push(shapes[e_i]);
+        // shapes[e_i].adj_shapes.push(shapes[s_i]);
+        // console.log(shapes[s_i].text);
+        // console.log(shapes[e_i].text);
 
-        let con = new Link(link_shapes[0], link_shapes[1]);
+
+        let con = new Link(shapes[s_i], shapes[e_i]);
         con.draw(context);
         connectors.push(con);
 
@@ -233,7 +305,7 @@ function endLink(e) {
                 shapes[i].selected = false;
             }
         }
-    }else{
+    } else {
         for (let i = 0; i < shapes.length; i++) {
             if (shapes[i].selected) {
                 shapes[i].selected = false;
@@ -242,7 +314,11 @@ function endLink(e) {
         }
     }
 
+    printShapes();
+    printConnector()
+
     canvas.onclick = null;
     reDraw();
 }
+
 

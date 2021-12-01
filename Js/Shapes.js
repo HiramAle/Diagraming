@@ -1,3 +1,5 @@
+let shapes = [];
+
 function Shape(x, y) {
     this.x = x;
     this.y = y;
@@ -135,12 +137,12 @@ function DataOutput(x, y) {
 
 DataOutput.prototype.draw = function (ctx) {
     ctx.beginPath();
-    ctx.moveTo(this.x + 20 - this.width / 2 , this.y - this.height / 2);
+    ctx.moveTo(this.x + 20 - this.width / 2, this.y - this.height / 2);
     ctx.lineTo(this.x + this.width / 2, this.y - this.height / 2);
     ctx.lineTo(this.x + this.width / 2, this.y + this.height / 2);
     ctx.lineTo(this.x - this.width / 2, this.y + this.height / 2);
     ctx.lineTo(this.x - this.width / 2, this.y + 20 - this.height / 2);
-    ctx.lineTo(this.x + 20- this.width / 2 , this.y - this.height / 2);
+    ctx.lineTo(this.x + 20 - this.width / 2, this.y - this.height / 2);
     //Apply Properties
     ctx.fillStyle = this.bg_color;
     ctx.fill();
@@ -158,14 +160,14 @@ DataOutput.prototype.draw = function (ctx) {
     ctx.stroke();
 };
 
-function Assignment(x,y){
+function Assignment(x, y) {
     Shape.call(this, x, y);
     this.width = 75;
     this.height = 50;
     this.text = "Assignment";
 }
 
-Assignment.prototype.draw = function (ctx){
+Assignment.prototype.draw = function (ctx) {
     ctx.beginPath();
     ctx.rect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
     ctx.fillStyle = this.bg_color;
@@ -184,6 +186,53 @@ Assignment.prototype.draw = function (ctx){
     ctx.stroke();
 }
 
+function IfShape(x, y) {
+    Shape.call(this, x, y);
+    this.width = 75;
+    this.height = 50;
+    this.text = "Si";
+    this.trueValue = null;
+    this.falseValue = null;
+}
+
+IfShape.prototype.draw = function (ctx) {
+    ctx.beginPath();
+    //Draw dimond
+    ctx.moveTo(this.x, this.y - this.height / 2);
+    ctx.lineTo(this.x + this.width / 2, this.y);
+    ctx.lineTo(this.x, this.y + this.height / 2);
+    ctx.lineTo(this.x - this.width / 2, this.y);
+    ctx.lineTo(this.x, this.y - this.height / 2);
+    //Apply Properties
+    ctx.fillStyle = this.bg_color;
+    ctx.fill();
+    ctx.fillStyle = this.text_color;
+    ctx.font = "10px Montserrat";
+    ctx.fillText(this.text, this.x, this.y);
+    //If Selected
+    if (this.selected) {
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = 4;
+    } else {
+        ctx.strokeStyle = this.stroke_color;
+        ctx.lineWidth = 1;
+    }
+    ctx.stroke();
+    //Draw Circle False
+    if (this.falseValue == null) {
+        ctx.beginPath();
+        ctx.arc(this.x + this.width / 2, this.y, 10, 0, 2 * Math.PI);
+        ctx.stroke();
+    }
+    //Draw Circle True
+    if (this.trueValue == null) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y + this.height / 2, 10, 0, 2 * Math.PI);
+        ctx.stroke();
+    }
+
+};
+
 function Link(start_shape, end_shape) {
     this.start_shape = start_shape;
     this.end_shape = end_shape;
@@ -195,13 +244,12 @@ Link.prototype.draw = function (ctx) {
     let end_x;
     let end_y;
 
-    // this.start_shape.adj_shapes.push(this.end_shape);
-    // this.end_shape.adj_shapes.push(this.start_shape);
 
     start_x = this.start_shape.x;
     start_y = this.start_shape.y;
     end_x = this.end_shape.x;
     end_y = this.end_shape.y;
+
 
     ctx.beginPath();
     ctx.moveTo(start_x, start_y);

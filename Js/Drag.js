@@ -18,10 +18,18 @@ function mouseInShape(shape, mx, my) {
         return insideEllipse(shape, mx, my);
     }
 
-    if (shape instanceof Variable || shape instanceof DataInput || shape instanceof DataOutput || shape instanceof Assignment){
+    if (shape instanceof Variable || shape instanceof DataInput || shape instanceof DataOutput || shape instanceof Assignment) {
         return insideRectangle(shape, mx, my);
     }
+
+    if(shape instanceof IfShape){
+        return insideIfShape(shape,mx,my);
+    }
+
 }
+
+
+
 
 function mouseDown(e) {
     e.preventDefault();
