@@ -37,16 +37,19 @@ function createCode(code) {
                 "{\n";
         }
         if (actual_shape instanceof Variable) {
-            segment = actual_shape.text + ";\n";
+            segment =  actual_shape.text + ";\n";
         }
         if (actual_shape instanceof DataInput) {
-            segment = "scanf();\n"
+            segment = " scanf();\n"
         }
         if (actual_shape instanceof DataOutput) {
-            segment = "printf(" + actual_shape.text + ");\n";
+            segment = " printf('" + actual_shape.text + "');\n";
         }
-        if (actual_shape instanceof DataOutput) {
-            segment = "printf(" + actual_shape.text + ");\n";
+        if (actual_shape instanceof Assignment) {
+            segment =  actual_shape.text + ";\n";
+        }
+        if (actual_shape instanceof End) {
+            segment = " return 0;\n}";
         }
         if (segment != null){
             codeArea.innerHTML += segment;

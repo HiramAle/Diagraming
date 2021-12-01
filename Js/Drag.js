@@ -14,7 +14,7 @@ canvas.width = window.innerWidth * .6;
 canvas.height = window.innerHeight * .8;
 
 function mouseInShape(shape, mx, my) {
-    if (shape instanceof Start) {
+    if (shape instanceof Start || shape instanceof End) {
         return insideEllipse(shape, mx, my);
     }
 

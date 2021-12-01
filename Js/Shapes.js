@@ -37,6 +37,33 @@ Start.prototype.draw = function (ctx) {
     ctx.stroke();
 };
 
+function End(x, y) {
+    Shape.call(this, x, y);
+    this.rx = 50;
+    this.ry = 25;
+    this.text = "Final";
+}
+
+End.prototype.draw = function (ctx) {
+    ctx.beginPath();
+    ctx.ellipse(this.x, this.y, this.ry, this.rx, Math.PI / 2, 0, 2 * Math.PI);
+    //Apply Properties
+    ctx.fillStyle = this.bg_color;
+    ctx.fill();
+    ctx.fillStyle = this.text_color;
+    ctx.font = "10px Montserrat";
+    ctx.fillText(this.text, this.x - this.rx / 4, this.y);
+    //If Selected
+    if (this.selected) {
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = 4;
+    } else {
+        ctx.strokeStyle = this.stroke_color;
+        ctx.lineWidth = 1;
+    }
+    ctx.stroke();
+};
+
 function Variable(x, y) {
     Shape.call(this, x, y);
     this.width = 75;
