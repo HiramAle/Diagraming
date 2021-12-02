@@ -23,8 +23,8 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link" onclick="crearJ()" href="#" id="guardar"  ><i class="fa fa-save"></i>&nbsp;Guardar</a></li>
                 <li class="nav-item">
-                    <input type="file" class="inputfile nav-link" id="file" name="file" accept=".xml,.json"/>
-                    <label for="file"> <i class="fa fa-upload iconFile" type="file"></i>&nbsp;Subir</label></li>
+                    <input type="file" class="inputfile nav-link" id="documento"  accept=".xml,.json, .txt" onchange="abrirArchivo(event)"/>
+                    <label for="documento"> <i class="fa fa-upload iconFile" type="file"></i>&nbsp;Subir</label></li>
             </ul>
         </div>
     </div>
@@ -119,6 +119,7 @@
                 <pre>
                     <code  class="language-c" id="codeArea">
                     </code>
+                    <p id="textoP">Hola</p>
                 </pre>
             </div>
         </div>
