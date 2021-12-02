@@ -38,3 +38,9 @@ function ifLinkingTrue(shape, mx, my) {
         return true;
     }
 }
+
+function ifLinkingConn(shape, mx, my) {
+    if (distance(mx, my, shape.x, shape.y - shape.height / 2) <= 10) {
+        return true;
+    }
+}

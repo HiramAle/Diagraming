@@ -200,6 +200,7 @@ function IfShape(x, y) {
     this.text = "Si";
     this.trueValue = null;
     this.falseValue = null;
+    this.connector = null;
 }
 
 IfShape.prototype.draw = function (ctx) {
@@ -225,41 +226,91 @@ IfShape.prototype.draw = function (ctx) {
         ctx.lineWidth = 1;
     }
     ctx.stroke();
+    //Draw Circle Connect To
+    if (this.connector == null) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y - this.height / 2, 10, 0, 2 * Math.PI);
+        ctx.fillStyle = "#00ffff";
+        ctx.fill();
+    }
     //Draw Circle False
     if (this.falseValue == null) {
         ctx.beginPath();
         ctx.arc(this.x + this.width / 2, this.y, 10, 0, 2 * Math.PI);
-        ctx.stroke();
+        ctx.fillStyle = "#00ffff";
+        ctx.fill();
     }
     //Draw Circle True
     if (this.trueValue == null) {
         ctx.beginPath();
         ctx.arc(this.x, this.y + this.height / 2, 10, 0, 2 * Math.PI);
-        ctx.stroke();
+        ctx.fillStyle = "#00ffff";
+        ctx.fill();
     }
 
 };
 
-function Link(start_shape, end_shape) {
-    this.start_shape = start_shape;
-    this.end_shape = end_shape;
+function WhileShape(x, y) {
+    Shape.call(this, x, y);
+    this.width = 75;
+    this.height = 50;
+    this.text = "While";
+    this.trueValue = null;
+    this.falseValue = null;
+    this.cicle = null;
+    this.connector = null;
 }
 
-Link.prototype.draw = function (ctx) {
-    let start_x;
-    let start_y;
-    let end_x;
-    let end_y;
-
-
-    start_x = this.start_shape.x;
-    start_y = this.start_shape.y;
-    end_x = this.end_shape.x;
-    end_y = this.end_shape.y;
-
-
+WhileShape.prototype.draw = function (ctx) {
     ctx.beginPath();
-    ctx.moveTo(start_x, start_y);
-    ctx.lineTo(end_x, end_y);
+    //Draw dimond
+    ctx.moveTo(this.x, this.y - this.height / 2);
+    ctx.lineTo(this.x + this.width / 2, this.y);
+    ctx.lineTo(this.x, this.y + this.height / 2);
+    ctx.lineTo(this.x - this.width / 2, this.y);
+    ctx.lineTo(this.x, this.y - this.height / 2);
+    //Apply Properties
+    ctx.fillStyle = this.bg_color;
+    ctx.fill();
+    ctx.fillStyle = this.text_color;
+    ctx.font = "10px Montserrat";
+    ctx.fillText(this.text, this.x, this.y);
+    //If Selected
+    if (this.selected) {
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = 4;
+    } else {
+        ctx.strokeStyle = this.stroke_color;
+        ctx.lineWidth = 1;
+    }
     ctx.stroke();
-}
+    //Draw Circle Connect To
+    if (this.connector == null) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y - this.height / 2, 10, 0, 2 * Math.PI);
+        ctx.fillStyle = "#00ffff";
+        ctx.fill();
+    }
+    //Draw Circle False
+    if (this.falseValue == null) {
+        ctx.beginPath();
+        ctx.arc(this.x + this.width / 2, this.y, 10, 0, 2 * Math.PI);
+        ctx.fillStyle = "#00ffff";
+        ctx.fill();
+    }
+    //Draw Circle True
+    if (this.trueValue == null) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y + this.height / 2, 10, 0, 2 * Math.PI);
+        ctx.fillStyle = "#00ffff";
+        ctx.fill();
+    }
+    //Draw Circle Cicle
+    if (this.cicle == null) {
+        ctx.beginPath();
+        ctx.arc(this.x - this.width / 2, this.y, 10, 0, 2 * Math.PI);
+        ctx.fillStyle = "#00ffff";
+        ctx.fill();
+    }
+
+};

@@ -22,7 +22,7 @@ function mouseInShape(shape, mx, my) {
         return insideRectangle(shape, mx, my);
     }
 
-    if(shape instanceof IfShape){
+    if(shape instanceof IfShape || shape instanceof WhileShape){
         return insideIfShape(shape,mx,my);
     }
 

@@ -65,6 +65,15 @@ function drawIf(e) {
     shapes.push(shape);
 }
 
+function drawWhile(e) {
+    x_cord = e.clientX - x_offset;
+    y_cord = e.clientY - y_offset;
+    canvas.onclick = null;
+    let shape = new WhileShape(x_cord, y_cord);
+    shape.draw(context);
+    shapes.push(shape);
+}
+
 function editShape(e) {
     //Prevee que no se dé mas de un click
     canvas.onclick = null;
