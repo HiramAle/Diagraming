@@ -27,13 +27,13 @@ function insideIfShape(shape, mx, my) {
     return mx >= shape.x - (shape.width + 10) / 2 && my >= shape.y - (shape.height + 10) / 2 && mx <= shape.x + (shape.width + 10) / 2 && my <= shape.y + (shape.height + 10) / 2;
 }
 
-function ifLinkFalse(shape, mx, my) {
+function ifLinkingFalse(shape, mx, my) {
     if (distance(mx, my, shape.x + shape.width / 2, shape.y) <= 10) {
         return true;
     }
 }
 
-function ifLinkTrue(shape, mx, my) {
+function ifLinkingTrue(shape, mx, my) {
     if (distance(mx, my, shape.x, shape.y + shape.height / 2) <= 10) {
         return true;
     }

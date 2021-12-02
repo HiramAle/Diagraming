@@ -28,9 +28,6 @@ function mouseInShape(shape, mx, my) {
 
 }
 
-
-
-
 function mouseDown(e) {
     e.preventDefault();
     e.stopPropagation();
