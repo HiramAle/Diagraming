@@ -26,27 +26,25 @@ function readGraph(startIndex = null) {
             }
         }
     }
-    //Call the interpreter function of the array
     return visited;
 }
 
-function createCode(code = []) {
-    if (code.length <= 0){
-        code = readGraph();
-    }
+
+let codeArea = document.getElementById("codeArea");
+codeArea.innerHTML = "";
+
+function createCode(code) {
     let actual_shape;
     let segment;
     //Get the code area
     let codeArea = document.getElementById("codeArea");
-    //Clean the code area
-    codeArea.innerHTML = "";
     //While the code array have items, the function continues reading the array
     while (code.length > 0) {
         //Pop the first node in the array
         actual_shape = code.shift();
         //Case Start Shape
         if (actual_shape instanceof Start) {
-            segment = "#include "+ "&lt;" +"stdio.h" + "&gt;" + "\n" +
+            segment = "#include <stdio.h>\n" +
                 "int main (int argc,char **argv)\n" +
                 "{\n";
         }
@@ -73,62 +71,12 @@ function createCode(code = []) {
         //Case If Shape
         if (actual_shape instanceof IfShape) {
             //Search for the last instruction inside if
-            let truePath = readGraph(shapes.indexOf(actual_shape.trueValue));
-            let falsePath = readGraph(shapes.indexOf(actual_shape.falseValue));
-            let endif;
-
-            for (let j = 0; j < falsePath.length; j++) {
-                if (truePath.includes(falsePath[j])) {
-                    endif = falsePath[j];
-                    break;
-                }
-            }
-            let eraseTrue = [];
-            let eraseFalse = [];
-
-            for (let i = 0; i < truePath.length; i++) {
-                if (Object.is(truePath[i], endif)) {
-                    break;
-                }else {
-                    eraseTrue.push(truePath[i]);
-                }
-            }
-
-            for (let i = 0; i < falsePath.length; i++) {
-                if (Object.is(falsePath[i], endif)) {
-                    break;
-                }else {
-                    eraseFalse.push(falsePath[i]);
-                }
-            }
-
-            segment = " if(" + actual_shape.text + "){\n" +
-                "\t" + "a" + "\n} else {\n" +
-                "\t" + "a" + "\n};\n";
-
-            createCode([eraseTrue]);
-            createCode([eraseFalse]);
-
-
-            console.log(endif.text);
-
-            // code.splice(code.indexOf(actual_shape.trueValue), 1);
-            // code.splice(code.indexOf(actual_shape.falseValue), 1);
-
+            segment = "if(" + actual_shape.text + "){\n";
         }
         if (segment != null) {
             codeArea.innerHTML += segment;
         }
-
-        // document.querySelectorAll("code").forEach(function(element) {
-        //     element.innerHTML = element.innerHTML.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-        // });
-
-
-
         hljs.highlightAll();
-
-
     }
 }
 

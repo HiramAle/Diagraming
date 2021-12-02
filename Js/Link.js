@@ -2,6 +2,8 @@
 let connectors = [];
 //Flag for If Links
 let linkingIf = "none";
+//Flag for While Links
+let linkingWhile = "none";
 // Index of start shape
 let startIndex;
 // Index of end shape
@@ -10,25 +12,31 @@ let endIndex;
 function Link(start_shape, end_shape) {
     this.start_shape = start_shape;
     this.end_shape = end_shape;
+    this.type = "normal";
 }
 
 Link.prototype.draw = function (ctx) {
-    let start_x;
-    let start_y;
-    let end_x;
-    let end_y;
-
-
-    start_x = this.start_shape.x;
-    start_y = this.start_shape.y;
-    end_x = this.end_shape.x;
-    end_y = this.end_shape.y;
-
-
     ctx.beginPath();
-    ctx.moveTo(start_x, start_y);
-    ctx.lineTo(end_x, end_y);
+    switch (this.type) {
+        case "normal":
+            ctx.moveTo(this.start_shape.x, this.start_shape.y);
+            ctx.lineTo(this.end_shape.x, this.end_shape.y);
+            break;
+        case "false":
+            ctx.moveTo(this.start_shape.x + this.start_shape.width / 2, this.start_shape.y);
+            ctx.lineTo(this.start_shape.x + 100 + this.start_shape.width / 2, this.start_shape.y);
+            ctx.lineTo(this.end_shape.x, this.end_shape.y);
+            break;
+        case "cicle":
+            ctx.moveTo(this.start_shape.x, this.start_shape.y);
+            ctx.lineTo(this.start_shape.x, this.start_shape.y + 50 + this.start_shape.width / 2);
+            ctx.lineTo(this.start_shape.x - 70, this.start_shape.y + 50 + this.start_shape.width / 2);
+            ctx.lineTo(this.end_shape.x - 70, this.end_shape.y);
+            ctx.lineTo(this.end_shape.x , this.end_shape.y);
+            break;
+    }
     ctx.stroke();
+
 }
 
 //Print all connectors on the diagram
@@ -49,18 +57,38 @@ function getShapeClickedIndex(e) {
             //Case the shape is an If Shape
             if (shapes[i] instanceof IfShape) {
                 //Case click on the True part of the If Shape
-                if(shapes[i].trueValue == null || shapes[i].falseValue == null || shapes[i].connector == null){
+                if (shapes[i].trueValue == null || shapes[i].falseValue == null || shapes[i].connector == null) {
                     if (ifLinkingTrue(shapes[i], x_cord, y_cord)) {
                         linkingIf = "true";
                     } else if (ifLinkingFalse(shapes[i], x_cord, y_cord)) {
                         //Case click on the False part of the If Shape
                         linkingIf = "false";
-                    } else if(ifLinkingConn(shapes[i],x_cord,y_cord)){
+                    } else if (ifLinkingConn(shapes[i], x_cord, y_cord)) {
                         //Case click on the False part of the If Shape
                         linkingIf = "conn";
                     }
                     //In case the link start in the true or false part of the if
                     if (linkingIf !== "none") {
+                        clickOnShape = true;
+                        shapes[i].selected = true;
+                        indexShape = i;
+                    }
+                }
+            } else if (shapes[i] instanceof WhileShape) {
+                if (shapes[i].trueValue == null || shapes[i].falseValue == null || shapes[i].connector == null || shapes[i].cicle == null) {
+                    if (ifLinkingTrue(shapes[i], x_cord, y_cord)) {
+                        linkingWhile = "true";
+                    } else if (ifLinkingFalse(shapes[i], x_cord, y_cord)) {
+                        //Case click on the False part of the If Shape
+                        linkingWhile = "false";
+                    } else if (ifLinkingConn(shapes[i], x_cord, y_cord)) {
+                        //Case click on the False part of the If Shape
+                        linkingWhile = "conn";
+                    } else if (ifLinkingCicle(shapes[i], x_cord, y_cord)) {
+                        linkingWhile = "cicle";
+                    }
+                    //In case the link start in the true or false part of the if
+                    if (linkingWhile !== "none") {
                         clickOnShape = true;
                         shapes[i].selected = true;
                         indexShape = i;
@@ -96,16 +124,18 @@ function startLink(e) {
 function endLink(e) {
     //Get the index of the end shape of the link
     endIndex = getShapeClickedIndex(e);
-    console.log(endIndex);
     //Check if the the click actually was on a shape
     if (endIndex >= 0) {
+        //Create a new connection
+        let con = new Link(shapes[startIndex], shapes[endIndex]);
         //Case linking If Shape
-        if (linkingIf !== "none"){
-            switch (linkingIf){
+        if (linkingIf !== "none") {
+            switch (linkingIf) {
                 case "true":
                     shapes[startIndex].trueValue = shapes[endIndex];
                     break;
                 case "false":
+                    con.type = "false";
                     shapes[startIndex].falseValue = shapes[endIndex];
                     break;
                 case "conn":
@@ -113,12 +143,29 @@ function endLink(e) {
                     break;
             }
             linkingIf = "none";
+        } else if (linkingWhile !== "none") {
+            switch (linkingWhile) {
+                case "true":
+                    shapes[startIndex].trueValue = shapes[endIndex];
+                    break;
+                case "false":
+                    con.type = "false";
+                    shapes[startIndex].falseValue = shapes[endIndex];
+                    break;
+                case "conn":
+                    shapes[endIndex].connector = shapes[startIndex];
+                    break;
+                case "cicle":
+                    con.type = "cicle";
+                    shapes[endIndex].cicle = shapes[startIndex];
+                    break;
+            }
+            console.log(con.type);
+            linkingWhile = "none";
         }
         printConnectors();
         //Add the end shape to the adjacency list of the start shape
         shapes[startIndex].adj_shapes.push(shapes[endIndex]);
-        //Create a new connection
-        let con = new Link(shapes[startIndex], shapes[endIndex]);
         //Draw the connection
         con.draw(context);
         //Save the connection

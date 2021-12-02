@@ -44,3 +44,9 @@ function ifLinkingConn(shape, mx, my) {
         return true;
     }
 }
+
+function ifLinkingCicle(shape, mx, my) {
+    if (distance(mx, my, shape.x - shape.width / 2, shape.y) <= 10) {
+        return true;
+    }
+}

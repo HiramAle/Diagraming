@@ -274,7 +274,7 @@ WhileShape.prototype.draw = function (ctx) {
     ctx.fill();
     ctx.fillStyle = this.text_color;
     ctx.font = "10px Montserrat";
-    ctx.fillText(this.text, this.x, this.y);
+    ctx.fillText(this.text, this.x - this.width / 4, this.y);
     //If Selected
     if (this.selected) {
         ctx.strokeStyle = "blue";
