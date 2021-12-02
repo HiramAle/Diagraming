@@ -1,20 +1,7 @@
-let x_cord = 0;
-let y_cord = 0;
-
-let connectors = [];
-
-function printConnector() {
-    for (let i = 0; i < connectors.length; i++) {
-        console.log((i + 1) + " " + connectors[i].start_shape.text + " -> " + connectors[i].end_shape.text);
-    }
-}
-
-function printShapes() {
-    for (let i = 0; i < shapes.length; i++) {
-        console.log((i + 1) + " " + shapes[i].text);
-    }
-}
-
+//Coords of the mouse click
+let x_cord;
+let y_cord;
+//Draw Start Shape
 function drawStart(e) {
     x_cord = e.clientX - x_offset;
     y_cord = e.clientY - y_offset;
@@ -23,7 +10,7 @@ function drawStart(e) {
     shape.draw(context);
     shapes.push(shape);
 }
-
+//Draw End Shape
 function drawEnd(e) {
     x_cord = e.clientX - x_offset;
     y_cord = e.clientY - y_offset;
@@ -203,122 +190,6 @@ function clearCanvas() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-let linkinTrue = false;
-let linkinFalse = false;
-let s_i;
-let e_i;
 
-function startLink(e) {
-    x_cord = e.clientX - x_offset;
-    y_cord = e.clientY - y_offset;
-    let linkin = false;
-    for (let i = 0; i < shapes.length; i++) {
-        if (mouseInShape(shapes[i], x_cord, y_cord)) {
-            //Case linkin IfShape
-            if (shapes[i] instanceof IfShape) {
-                if (ifLinkTrue(shapes[i], x_cord, y_cord)) {
-                    if (shapes[i].trueValue == null) {
-                        console.log("True");
-                        linkinTrue = true;
-                        linkin = true;
-                        shapes[i].selected = true;
-                        s_i = i;
-                    }
-                }
-                if (ifLinkFalse(shapes[i], x_cord, y_cord)) {
-                    if (shapes[i].falseValue == null) {
-                        console.log("False");
-                        linkinFalse = true;
-                        linkin = true;
-                        shapes[i].selected = true;
-                        s_i = i;
-                    }
-                }
-            } else {
-                //Normal Linkin
-                linkin = true;
-                shapes[i].selected = true;
-                s_i = i;
-            }
-
-        }
-    }
-    reDraw();
-    if (linkin) {
-        canvas.onclick = endLink;
-    } else {
-        canvas.onclick = null;
-    }
-
-}
-
-function endLink(e) {
-    x_cord = e.clientX - x_offset;
-    y_cord = e.clientY - y_offset;
-    let link_shapes = [];
-    let shapes_indexes = [];
-    let linkin;
-    for (let i = 0; i < shapes.length; i++) {
-        if (mouseInShape(shapes[i], x_cord, y_cord)) {
-            shapes[i].selected = true;
-            linkin = true;
-            e_i = i;
-        }
-    }
-
-    if (linkin) {
-        // for (let i = 0; i < shapes.length; i++) {
-        //     if (shapes[i].selected) {
-        //         link_shapes.push(shapes[i]);
-        //         shapes_indexes.push(i);
-        //     }
-        // }
-        //
-        // s_i = shapes_indexes[0];
-        // e_i = shapes_indexes[1];
-
-        // Ifcase
-        if (linkinTrue) {
-            shapes[s_i].trueValue = shapes[e_i];
-            console.log(shapes[s_i].trueValue.text)
-            linkinTrue = false;
-        }
-
-        if (linkinFalse) {
-            shapes[s_i].falseValue = shapes[e_i];
-            console.log(shapes[s_i].falseValue.text)
-            linkinFalse = false;
-        }
-
-        shapes[s_i].adj_shapes.push(shapes[e_i]);
-        // shapes[e_i].adj_shapes.push(shapes[s_i]);
-        // console.log(shapes[s_i].text);
-        // console.log(shapes[e_i].text);
-
-
-        let con = new Link(shapes[s_i], shapes[e_i]);
-        con.draw(context);
-        connectors.push(con);
-
-        for (let i = 0; i < shapes.length; i++) {
-            if (shapes[i].selected) {
-                shapes[i].selected = false;
-            }
-        }
-    } else {
-        for (let i = 0; i < shapes.length; i++) {
-            if (shapes[i].selected) {
-                shapes[i].selected = false;
-                linkin = false;
-            }
-        }
-    }
-
-    printShapes();
-    printConnector()
-
-    canvas.onclick = null;
-    reDraw();
-}
 
 

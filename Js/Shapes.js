@@ -1,5 +1,12 @@
 let shapes = [];
 
+//Print all the shapes in the Diagram
+function printShapes() {
+    for (let i = 0; i < shapes.length; i++) {
+        console.log((i + 1) + " " + shapes[i].text);
+    }
+}
+
 function Shape(x, y) {
     this.x = x;
     this.y = y;

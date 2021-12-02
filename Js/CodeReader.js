@@ -46,7 +46,7 @@ function createCode(code = []) {
         actual_shape = code.shift();
         //Case Start Shape
         if (actual_shape instanceof Start) {
-            segment = "#include <stdio.h>\n" +
+            segment = "#include "+ "&lt;" +"stdio.h" + "&gt;" + "\n" +
                 "int main (int argc,char **argv)\n" +
                 "{\n";
         }
@@ -112,15 +112,22 @@ function createCode(code = []) {
 
             console.log(endif.text);
 
-            code.splice(code.indexOf(actual_shape.trueValue), 1);
-            code.splice(code.indexOf(actual_shape.falseValue), 1);
+            // code.splice(code.indexOf(actual_shape.trueValue), 1);
+            // code.splice(code.indexOf(actual_shape.falseValue), 1);
 
         }
         if (segment != null) {
             codeArea.innerHTML += segment;
         }
 
+        // document.querySelectorAll("code").forEach(function(element) {
+        //     element.innerHTML = element.innerHTML.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        // });
+
+
+
         hljs.highlightAll();
+
 
     }
 }
