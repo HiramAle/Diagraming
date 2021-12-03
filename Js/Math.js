@@ -50,3 +50,19 @@ function ifLinkingCicle(shape, mx, my) {
         return true;
     }
 }
+
+function getAnchorPointsSelected(shape, mx, my) {
+    if (distance(mx, my, shape.x + shape.width / 2, shape.y) <= 10) {
+        return "false";
+    }
+    if (distance(mx, my, shape.x, shape.y + shape.height / 2) <= 10) {
+        return "true";
+    }
+    if (distance(mx, my, shape.x, shape.y - shape.height / 2) <= 10) {
+        return "conn";
+    }
+    if (distance(mx, my, shape.x - shape.width / 2, shape.y) <= 10) {
+        return "cicle";
+    }
+    return false;
+}

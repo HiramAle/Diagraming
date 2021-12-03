@@ -1,6 +1,7 @@
 //Coords of the mouse click
 let x_cord;
 let y_cord;
+
 //Draw Start Shape
 function drawStart(e) {
     x_cord = e.clientX - x_offset;
@@ -10,6 +11,7 @@ function drawStart(e) {
     shape.draw(context);
     shapes.push(shape);
 }
+
 //Draw End Shape
 function drawEnd(e) {
     x_cord = e.clientX - x_offset;
@@ -74,66 +76,76 @@ function drawWhile(e) {
     shapes.push(shape);
 }
 
-function editShape(e) {
-    //Prevee que no se dé mas de un click
-    canvas.onclick = null;
-    //Obtiene la ubicación del mouse
+function getShape(e, action) {
+    let selectedShape;
     x_cord = e.clientX - x_offset;
     y_cord = e.clientY - y_offset;
-    let shape;
-    //Limpia las selecciones pasadas
+    for (let i = 0; i < shapes.length; i++) {
+        if (mouseInShape(shapes[i], x_cord, y_cord)) {
+            selectedShape = shapes [i];
+        }
+    }
+    if (action === "linking" && (selectedShape instanceof IfShape || selectedShape instanceof WhileShape)) {
+        console.log(getAnchorPointsSelected(selectedShape, x_cord, y_cord));
+        if (!getAnchorPointsSelected(selectedShape, x_cord, y_cord)) {
+            return false;
+        }
+    }
+    return selectedShape;
+}
+
+function cleanSelection(){
     for (let i = 0; i < shapes.length; i++) {
         if (shapes[i].selected) {
             shapes[i].selected = false;
         }
     }
-    //Marca la selección actual
-    for (let i = 0; i < shapes.length; i++) {
-        if (mouseInShape(shapes[i], x_cord, y_cord)) {
-            shapes[i].selected = true;
-            shape = shapes [i];
-        }
-    }
+    reDraw();
+}
+
+function editShape(e) {
+    cleanSelection();
+    //Prevee que no se dé mas de un click
+    canvas.onclick = null;
+    //Obtiene la ubicación del mouse
+    x_cord = e.clientX - x_offset;
+    y_cord = e.clientY - y_offset;
+    let shape = getShape(e, "edit");
     //Actualiza el canvas
     reDraw();
     //Muestra las opciones de edición
     if (shape) {
+        shape.selected = true;
+        reDraw();
         document.getElementById("bg_color").style.display = "inline-flex";
         document.getElementById("text").style.display = "inline-flex";
         document.getElementById("save_btn").style.display = "inline-flex";
         document.getElementById("cancel_btn").style.display = "inline-flex";
         document.getElementById("bg_color").value = shape.bg_color;
         document.getElementById("text").value = shape.text;
+    }else{
+        endEdit();
     }
 }
 
 function saveEdit() {
+    let shape;
     //Obtiene los valores del texto y el fondo
     let bg_color = document.getElementById("bg_color").value;
     let text = document.getElementById("text").value;
-    //Actualiza el 
     for (let i = 0; i < shapes.length; i++) {
         if (shapes[i].selected) {
-            shapes[i].text = text;
-            shapes[i].bg_color = bg_color;
-            shapes[i].selected = false;
+            shape = shapes[i];
+            break;
         }
     }
-    document.getElementById("bg_color").style.display = "none";
-    document.getElementById("text").style.display = "none";
-    document.getElementById("save_btn").style.display = "none";
-    document.getElementById("cancel_btn").style.display = "none";
-    reDraw();
-
+    shape.text = text;
+    shape.bg_color = bg_color;
+    endEdit();
 }
 
-function cancelEdit() {
-    for (let i = 0; i < shapes.length; i++) {
-        if (shapes[i].selected) {
-            shapes[i].selected = false;
-        }
-    }
-    reDraw();
+function endEdit() {
+    cleanSelection();
     document.getElementById("bg_color").style.display = "none";
     document.getElementById("text").style.display = "none";
     document.getElementById("save_btn").style.display = "none";
@@ -154,7 +166,7 @@ function eraseShape(e) {
         }
     }
     //Validate that index is not null
-    if(index != null){
+    if (index != null) {
         //Delete the shape
         shapes.splice(index, 1);
         //Delete the shape in the adj list of all the shapes

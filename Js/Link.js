@@ -123,7 +123,17 @@ function startLink(e) {
 }
 
 function endLink(e) {
-
+    //Variables to know if the start shape is an if or a while
+    let startShapeIf;
+    let startShapeWhile;
+    if (linkingIf) {
+        startShapeIf = true;
+    } else if (linkingWhile) {
+        startShapeWhile = true;
+    }
+    //Reset the global variables of getShapeClickedIndex
+    linkingIf = false;
+    linkingWhile = false;
     //Get the index of the end shape of the link
     endIndex = getShapeClickedIndex(e);
     //Check if the the click actually was on a shape
