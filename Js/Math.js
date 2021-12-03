@@ -51,18 +51,18 @@ function ifLinkingCicle(shape, mx, my) {
     }
 }
 
-function getAnchorPointsSelected(shape, mx, my) {
+function getAnchorPointSelected(shape, mx, my) {
     if (distance(mx, my, shape.x + shape.width / 2, shape.y) <= 10) {
-        return "false";
+        return "falsePoint";
     }
     if (distance(mx, my, shape.x, shape.y + shape.height / 2) <= 10) {
-        return "true";
+        return "truePoint";
     }
     if (distance(mx, my, shape.x, shape.y - shape.height / 2) <= 10) {
-        return "conn";
+        return "connPoint";
     }
     if (distance(mx, my, shape.x - shape.width / 2, shape.y) <= 10) {
-        return "cicle";
+        return "ciclePoint";
     }
     return false;
 }

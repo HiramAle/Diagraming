@@ -85,16 +85,15 @@ function getShape(e, action) {
             selectedShape = shapes [i];
         }
     }
-    if (action === "linking" && (selectedShape instanceof IfShape || selectedShape instanceof WhileShape)) {
-        console.log(getAnchorPointsSelected(selectedShape, x_cord, y_cord));
-        if (!getAnchorPointsSelected(selectedShape, x_cord, y_cord)) {
+    if (action === "link" && (selectedShape instanceof IfShape || selectedShape instanceof WhileShape)) {
+        if (!getAnchorPointSelected(selectedShape, x_cord, y_cord)) {
             return false;
         }
     }
     return selectedShape;
 }
 
-function cleanSelection(){
+function cleanSelection() {
     for (let i = 0; i < shapes.length; i++) {
         if (shapes[i].selected) {
             shapes[i].selected = false;
@@ -123,7 +122,7 @@ function editShape(e) {
         document.getElementById("cancel_btn").style.display = "inline-flex";
         document.getElementById("bg_color").value = shape.bg_color;
         document.getElementById("text").value = shape.text;
-    }else{
+    } else {
         endEdit();
     }
 }
@@ -156,19 +155,11 @@ function eraseShape(e) {
     canvas.onclick = null;
     x_cord = e.clientX - x_offset;
     y_cord = e.clientY - y_offset;
-    let delShape;
-    let index;
-    //Get the shape to erase and the index in the array
-    for (let i = 0; i < shapes.length; i++) {
-        if (mouseInShape(shapes[i], x_cord, y_cord)) {
-            delShape = shapes[i];
-            index = i;
-        }
-    }
-    //Validate that index is not null
-    if (index != null) {
+    let delShape = getShape(e, "delete");
+    //Validate the shape is not null
+    if (delShape) {
         //Delete the shape
-        shapes.splice(index, 1);
+        shapes.splice(shapes.indexOf(delShape), 1);
         //Delete the shape in the adj list of all the shapes
         for (let i = 0; i < shapes.length; i++) {
             for (let j = 0; j < shapes[i].adj_shapes.length; j++) {
@@ -193,6 +184,23 @@ function eraseShape(e) {
                 connectors.splice(connectors.indexOf(delConn.pop()), 1);
             }
         }
+        //Reset the empty Anchor Points from the if and while shapes
+        for (let i = 0; i < shapes.length; i++) {
+            if (shapes[i] instanceof IfShape || shapes[i] instanceof WhileShape) {
+                if (Object.is(shapes[i].trueValue, delShape)) {
+                    shapes[i].trueValue = null;
+                }
+                if (Object.is(shapes[i].falseValue, delShape)) {
+                    shapes[i].falseValue = null;
+                }
+                if (Object.is(shapes[i].connector, delShape)) {
+                    shapes[i].connector = null;
+                }
+                if (Object.is(shapes[i].cicle, delShape)) {
+                    shapes[i].cicle = null;
+                }
+            }
+        }
         //Update the canvas
         reDraw();
     }
@@ -214,9 +222,9 @@ function clearCanvas() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function limpiarPantalla(){
+function limpiarPantalla() {
     clearCanvas();
-    connectors= [];
+    connectors = [];
     shapes = [];
 }
 

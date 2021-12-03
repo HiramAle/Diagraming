@@ -18,20 +18,20 @@ function Link(start_shape, end_shape) {
 Link.prototype.draw = function (ctx) {
     ctx.beginPath();
     switch (this.type) {
-        case "normal":
-            ctx.moveTo(this.start_shape.x, this.start_shape.y);
-            ctx.lineTo(this.end_shape.x, this.end_shape.y);
-            break;
-        case "false":
+        case "falsePoint":
             ctx.moveTo(this.start_shape.x + this.start_shape.width / 2, this.start_shape.y);
             ctx.lineTo(this.start_shape.x + 100 + this.start_shape.width / 2, this.start_shape.y);
             ctx.lineTo(this.end_shape.x, this.end_shape.y);
             break;
-        case "cicle":
+        case "ciclePoint":
             ctx.moveTo(this.start_shape.x, this.start_shape.y);
             ctx.lineTo(this.start_shape.x, this.start_shape.y + 50 + this.start_shape.width / 2);
             ctx.lineTo(this.start_shape.x - 70, this.start_shape.y + 50 + this.start_shape.width / 2);
             ctx.lineTo(this.end_shape.x - 70, this.end_shape.y);
+            ctx.lineTo(this.end_shape.x, this.end_shape.y);
+            break;
+        default:
+            ctx.moveTo(this.start_shape.x, this.start_shape.y);
             ctx.lineTo(this.end_shape.x, this.end_shape.y);
             break;
     }
@@ -46,148 +46,76 @@ function printConnectors() {
     }
 }
 
-function getShapeClickedIndex(e) {
-    let clickOnShape = false;
-    //Get the coords of the mouse click
-    x_cord = e.clientX - x_offset;
-    y_cord = e.clientY - y_offset;
-    let indexShape = -1;
-    for (let i = 0; i < shapes.length; i++) {
-        if (mouseInShape(shapes[i], x_cord, y_cord)) {
-            //Case the shape is an If Shape
-            if (shapes[i] instanceof IfShape) {
-                //Case click on the True part of the If Shape
-                if (shapes[i].trueValue == null || shapes[i].falseValue == null || shapes[i].connector == null) {
-                    if (ifLinkingTrue(shapes[i], x_cord, y_cord)) {
-                        linkingIf = "true";
-                    } else if (ifLinkingFalse(shapes[i], x_cord, y_cord)) {
-                        //Case click on the False part of the If Shape
-                        linkingIf = "false";
-                    } else if (ifLinkingConn(shapes[i], x_cord, y_cord)) {
-                        //Case click on the False part of the If Shape
-                        linkingIf = "conn";
-                    }
-                    //In case the link start in the true or false part of the if
-                    if (linkingIf !== "none") {
-                        clickOnShape = true;
-                        shapes[i].selected = true;
-                        indexShape = i;
-                    }
-                }
-            } else if (shapes[i] instanceof WhileShape) {
-                if (shapes[i].trueValue == null || shapes[i].falseValue == null || shapes[i].connector == null || shapes[i].cicle == null) {
-                    if (ifLinkingTrue(shapes[i], x_cord, y_cord)) {
-                        linkingWhile = "true";
-                    } else if (ifLinkingFalse(shapes[i], x_cord, y_cord)) {
-                        //Case click on the False part of the If Shape
-                        linkingWhile = "false";
-                    } else if (ifLinkingConn(shapes[i], x_cord, y_cord)) {
-                        //Case click on the False part of the If Shape
-                        linkingWhile = "conn";
-                    } else if (ifLinkingCicle(shapes[i], x_cord, y_cord)) {
-                        linkingWhile = "cicle";
-                    }
-                    //In case the link start in the true or false part of the if
-                    if (linkingWhile !== "none") {
-                        clickOnShape = true;
-                        shapes[i].selected = true;
-                        indexShape = i;
-                    }
-                }
-            } else {
-                //Case the shape isn't an If Shape
-                clickOnShape = true;
-                shapes[i].selected = true;
-                indexShape = i;
-            }
-        }
-    }
-    //Return the index of the shape clicked ( -1 if doesn't click on a shape)
-    return indexShape;
-}
-
+let startShape;
+let endShape;
+let startAnchorPoint;
+let endAnchorPoint;
 
 function startLink(e) {
     //Get the index of the start shape of the link
-    startIndex = getShapeClickedIndex(e);
+    startShape = getShape(e, "link");
     //Check if the click actually was on a shape
-    if (startIndex >= 0) {
-        //Update de canvas
-        reDraw();
-        //Change the canvas.onclick to register the end shape
+    if (startShape) {
+        if (startShape instanceof IfShape || startShape instanceof WhileShape) {
+            startAnchorPoint = getAnchorPointSelected(startShape, e.clientX - x_offset, e.clientY - y_offset);
+        }
         canvas.onclick = endLink;
+        startShape.selected = true;
+        reDraw();
     } else {
-        //Case the click was in an empty space
         canvas.onclick = null;
     }
 }
 
 function endLink(e) {
-    //Variables to know if the start shape is an if or a while
-    let startShapeIf;
-    let startShapeWhile;
-    if (linkingIf) {
-        startShapeIf = true;
-    } else if (linkingWhile) {
-        startShapeWhile = true;
-    }
-    //Reset the global variables of getShapeClickedIndex
-    linkingIf = false;
-    linkingWhile = false;
-    //Get the index of the end shape of the link
-    endIndex = getShapeClickedIndex(e);
-    //Check if the the click actually was on a shape
-    if (endIndex >= 0) {
-        //Create a new connection
-        let con = new Link(shapes[startIndex], shapes[endIndex]);
-        //Case linking If Shape
-        if (linkingIf !== "none") {
-            switch (linkingIf) {
-                case "true":
-                    shapes[startIndex].trueValue = shapes[endIndex];
-                    break;
-                case "false":
-                    con.type = "false";
-                    shapes[startIndex].falseValue = shapes[endIndex];
-                    break;
-                case "conn":
-                    shapes[endIndex].connector = shapes[startIndex];
-                    break;
-            }
-            linkingIf = "none";
-        } else if (linkingWhile !== "none") {
-            switch (linkingWhile) {
-                case "true":
-                    shapes[startIndex].trueValue = shapes[endIndex];
-                    break;
-                case "false":
-                    con.type = "false";
-                    shapes[startIndex].falseValue = shapes[endIndex];
-                    break;
-                case "conn":
-                    shapes[endIndex].connector = shapes[startIndex];
-                    break;
-                case "cicle":
-                    con.type = "cicle";
-                    shapes[endIndex].cicle = shapes[startIndex];
-                    break;
-            }
-            linkingWhile = "none";
+    endShape = getShape(e, "link");
+    //Check if the click actually was on a shape
+    if (endShape) {
+        let connection = new Link(startShape, endShape);
+        if (startAnchorPoint) {
+            linkingAnchorPoint(startShape, endShape, startAnchorPoint);
+            connection.type = startAnchorPoint;
+            startAnchorPoint = null;
         }
-        printConnectors();
-        //Add the end shape to the adjacency list of the start shape
-        shapes[startIndex].adj_shapes.push(shapes[endIndex]);
-        //Draw the connection
-        con.draw(context);
-        //Save the connection
-        connectors.push(con);
-    }
-    //Deselect all the shapes
-    for (let i = 0; i < shapes.length; i++) {
-        if (shapes[i].selected) {
-            shapes[i].selected = false;
+        if (endShape instanceof IfShape || endShape instanceof WhileShape) {
+            endAnchorPoint = getAnchorPointSelected(endShape, e.clientX - x_offset, e.clientY - y_offset);
+            if(endAnchorPoint){
+                linkingAnchorPoint(endShape, startShape, endAnchorPoint);
+                if (!connection.type){
+                    connection.type = endAnchorPoint;
+                }
+                endAnchorPoint = null;
+            }
         }
+        startShape.adj_shapes.push(endShape);
+        connectors.push(connection);
     }
+    printConnectors();
+    cleanSelection();
     canvas.onclick = null;
-    reDraw();
+}
+
+function linkingAnchorPoint(shape1, shape2, anchorPoint) {
+    switch (anchorPoint) {
+        case "truePoint":
+            if (!shape1.trueValue){
+                shape1.trueValue = shape2;
+            }
+            break;
+        case "falsePoint":
+            if (!shape1.falseValue) {
+                shape1.falseValue = shape2;
+            }
+            break;
+        case "connPoint":
+            if (!shape1.connector) {
+                shape1.connector = shape2;
+            }
+            break;
+        case "ciclePoint":
+            if (!shape1.cicle) {
+                shape1.cicle = shape2;
+            }
+            break;
+    }
 }
