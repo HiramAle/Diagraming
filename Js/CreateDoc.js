@@ -3,10 +3,24 @@
 // Crea y  descarga y el archivo .json
 function crearJ(){
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(shapes));
-    var dlAnchorElem = document.getElementById('guardar');
-    dlAnchorElem.setAttribute("href",     dataStr     );
-    dlAnchorElem.setAttribute("download", "diagrama.json");
+    var dataStr2 = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(connectors));
+    var docs = [dataStr,dataStr2];
+
+    var link = document.createElement('a');
+
+    link.setAttribute('download', 'Diagrama.json');
+    link.style.display = 'none';
+  
+    document.body.appendChild(link);
+  
+    for (var i = 0; i < docs.length; i++) {
+      link.setAttribute('href', docs[i]);
+      link.click();
+    }
+  
+    document.body.removeChild(link);
 }
+  
 
 //Lee el archivo .json
 function abrirArchivo (evento){
@@ -18,14 +32,14 @@ function abrirArchivo (evento){
             let contenido = e.target.result;
             let json_data = JSON.parse(contenido);
             for(var i in json_data){
-                alert('hola');
                 shapes.push([i, json_data [i]]);
-            }
-            
-            //reDraw();
+            }         
         };
         reader.readAsText(archivo);
     } else {
         alert('No se subio el archivo exitosamente')
     }
+
+    reDraw();
+    
 }
