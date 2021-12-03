@@ -32,7 +32,7 @@ Link.prototype.draw = function (ctx) {
             ctx.lineTo(this.start_shape.x, this.start_shape.y + 50 + this.start_shape.width / 2);
             ctx.lineTo(this.start_shape.x - 70, this.start_shape.y + 50 + this.start_shape.width / 2);
             ctx.lineTo(this.end_shape.x - 70, this.end_shape.y);
-            ctx.lineTo(this.end_shape.x , this.end_shape.y);
+            ctx.lineTo(this.end_shape.x, this.end_shape.y);
             break;
     }
     ctx.stroke();
@@ -106,10 +106,11 @@ function getShapeClickedIndex(e) {
     return indexShape;
 }
 
+
 function startLink(e) {
     //Get the index of the start shape of the link
     startIndex = getShapeClickedIndex(e);
-    //Check if the the click actually was on a shape
+    //Check if the click actually was on a shape
     if (startIndex >= 0) {
         //Update de canvas
         reDraw();
@@ -122,6 +123,7 @@ function startLink(e) {
 }
 
 function endLink(e) {
+
     //Get the index of the end shape of the link
     endIndex = getShapeClickedIndex(e);
     //Check if the the click actually was on a shape
@@ -160,7 +162,6 @@ function endLink(e) {
                     shapes[endIndex].cicle = shapes[startIndex];
                     break;
             }
-            console.log(con.type);
             linkingWhile = "none";
         }
         printConnectors();

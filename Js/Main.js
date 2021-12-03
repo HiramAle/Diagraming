@@ -153,34 +153,37 @@ function eraseShape(e) {
             index = i;
         }
     }
-    //Delete the shape
-    shapes.splice(index, 1);
-    //Delete the shape in the adj list of all the shapes
-    for (let i = 0; i < shapes.length; i++) {
-        for (let j = 0; j < shapes[i].adj_shapes.length; j++) {
-            if (Object.is(shapes[i].adj_shapes[j], delShape)) {
-                shapes[i].adj_shapes.splice(j, 1);
+    //Validate that index is not null
+    if(index != null){
+        //Delete the shape
+        shapes.splice(index, 1);
+        //Delete the shape in the adj list of all the shapes
+        for (let i = 0; i < shapes.length; i++) {
+            for (let j = 0; j < shapes[i].adj_shapes.length; j++) {
+                if (Object.is(shapes[i].adj_shapes[j], delShape)) {
+                    shapes[i].adj_shapes.splice(j, 1);
+                }
             }
         }
-    }
-    //Get the indexes of the connectors with the shape
-    let delConn = [];
-    for (let i = 0; i < connectors.length; i++) {
-        if (Object.is(connectors[i].start_shape, delShape)) {
-            delConn.push(connectors[i]);
-        }
-        if (Object.is(connectors[i].end_shape, delShape)) {
-            delConn.push(connectors[i]);
-        }
-    }
-    //Delete the connectors of the shape
-    while (delConn.length > 0) {
+        //Get the indexes of the connectors with the shape
+        let delConn = [];
         for (let i = 0; i < connectors.length; i++) {
-            connectors.splice(connectors.indexOf(delConn.pop()), 1);
+            if (Object.is(connectors[i].start_shape, delShape)) {
+                delConn.push(connectors[i]);
+            }
+            if (Object.is(connectors[i].end_shape, delShape)) {
+                delConn.push(connectors[i]);
+            }
         }
+        //Delete the connectors of the shape
+        while (delConn.length > 0) {
+            for (let i = 0; i < connectors.length; i++) {
+                connectors.splice(connectors.indexOf(delConn.pop()), 1);
+            }
+        }
+        //Update the canvas
+        reDraw();
     }
-    //Update the canvas
-    reDraw();
 }
 
 function reDraw() {
