@@ -8,6 +8,7 @@ function printShapes() {
 }
 
 function Shape(x, y) {
+    this.type = "";
     this.x = x;
     this.y = y;
     this.text = "";
@@ -21,6 +22,7 @@ function Shape(x, y) {
 
 function Start(x, y) {
     Shape.call(this, x, y);
+    this.type = "start";
     this.rx = 50;
     this.ry = 25;
     this.text = "Inicio";
@@ -48,6 +50,7 @@ Start.prototype.draw = function (ctx) {
 
 function End(x, y) {
     Shape.call(this, x, y);
+    this.type = "end";
     this.rx = 50;
     this.ry = 25;
     this.text = "Final";
@@ -75,6 +78,7 @@ End.prototype.draw = function (ctx) {
 
 function Variable(x, y) {
     Shape.call(this, x, y);
+    this.type = "variable";
     this.width = 75;
     this.height = 50;
     this.text = "Variable";
@@ -105,6 +109,7 @@ Variable.prototype.draw = function (ctx) {
 
 function DataInput(x, y) {
     Shape.call(this, x, y);
+    this.type = "input";
     this.width = 75;
     this.height = 50;
     this.text = "Input";
@@ -137,6 +142,7 @@ DataInput.prototype.draw = function (ctx) {
 
 function DataOutput(x, y) {
     Shape.call(this, x, y);
+    this.type = "output";
     this.width = 75;
     this.height = 50;
     this.text = "Output";
@@ -169,6 +175,7 @@ DataOutput.prototype.draw = function (ctx) {
 
 function Assignment(x, y) {
     Shape.call(this, x, y);
+    this.type = "assigment";
     this.width = 75;
     this.height = 50;
     this.text = "Assignment";
@@ -195,6 +202,7 @@ Assignment.prototype.draw = function (ctx) {
 
 function IfShape(x, y) {
     Shape.call(this, x, y);
+    this.type = "if";
     this.width = 75;
     this.height = 50;
     this.text = "Si";
@@ -252,6 +260,7 @@ IfShape.prototype.draw = function (ctx) {
 
 function WhileShape(x, y) {
     Shape.call(this, x, y);
+    this.type = "while";
     this.width = 75;
     this.height = 50;
     this.text = "While";
