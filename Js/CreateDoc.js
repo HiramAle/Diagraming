@@ -122,6 +122,9 @@ function recoveredS (){
                 a = new IfShape(recoveredShapes[i][1].x, recoveredShapes[i][1].y)
                 a.text = recoveredShapes[i][1].text;
                 a.bg_color = recoveredShapes[i][1].bg_color;
+                a.trueValue = recoveredShapes[i][1].trueValue;
+                a.falseValue = recoveredShapes[i][1].falseValue;
+                a.connector = recoveredShapes[i][1].connector;
                 for(j in recoveredShapes[i][1].adj_shapes){
                     let b = recover(recoveredShapes[i][1].adj_shapes[j]);
                     recovered_adj.push(b);
@@ -133,6 +136,10 @@ function recoveredS (){
                 a = new WhileShape(recoveredShapes[i][1].x, recoveredShapes[i][1].y)
                 a.text = recoveredShapes[i][1].text;
                 a.bg_color = recoveredShapes[i][1].bg_color;
+                a.trueValue = recoveredShapes[i][1].trueValue;
+                a.falseValue = recoveredShapes[i][1].falseValue;
+                a.cicle = recoveredShapes[i][1].cicle;
+                a.connector = recoveredShapes[i][1].connector;
                 for(j in recoveredShapes[i][1].adj_shapes){
                     let b = recover(recoveredShapes[i][1].adj_shapes[j]);
                     recovered_adj.push(b);
@@ -148,9 +155,18 @@ function recoveredL(){
     for(var i in recoveredLinks){
         let shape1 = recover(recoveredLinks[i][1].start_shape);
         let shape2 = recover(recoveredLinks[i][1].end_shape);
-        let a = new Link (shape1, shape2);
-        a.type = recoveredLinks[i][1].type;
-        connectors.push(a);
+        
+        for(j in shapes){
+            if(shapes[j].x  == shape1.x && shapes[j].y == shape1.y){
+                for(k in shapes){
+                    if(shapes[k].x  == shape2.x && shapes[k].y == shape2.y){
+                        let a = new Link (shapes[j], shapes[k]);
+                        a.type = recoveredLinks[i][1].type;
+                        connectors.push(a);
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -191,11 +207,18 @@ function recover(figura){
                 a = new IfShape(figura.x, figura.y);
                 a.text = figura.text;
                 a.bg_color = figura.bg_color;
+                a.trueValue = figura.trueValue;
+                a.falseValue = figura.falseValue;
+                a.connector = figura.connector;
                 return a;
             default:
                 a = new WhileShape(figura.x, figura.y);
                 a.text = figura.text;
                 a.bg_color = figura.bg_color;
+                a.trueValue =figura.trueValue;
+                a.falseValue = figura.falseValue;
+                a.cicle = figura.cicle;
+                a.connector = figura.connector;
                 return a;
         }
 }
