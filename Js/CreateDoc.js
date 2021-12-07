@@ -172,36 +172,61 @@ function recoveredL(){
 
 function recover(figura){
     let a;
+    let recovered_adj = [];
         switch (figura.type) {
             case "start":
                 a = new Start(figura.x, figura.y);
                 a.text = figura.text;
                 a.bg_color = figura.bg_color;
+                for(j in figura.adj_shapes){
+                    let b = recover(figura.adj_shapes[j]);
+                    recovered_adj.push(b);
+                }
                 return a;
             case "end":
                 a = new End(figura.x, figura.y);
                 a.text = figura.text;
                 a.bg_color = figura.bg_color;
+                for(j in figura.adj_shapes){
+                    let b = recover(figura.adj_shapes[j]);
+                    recovered_adj.push(b);
+                }
                 return a;
             case "variable":
                 a = new Variable(figura.x, figura.y);
                 a.text = figura.text;
                 a.bg_color = figura.bg_color;
+                for(j in figura.adj_shapes){
+                    let b = recover(figura.adj_shapes[j]);
+                    recovered_adj.push(b);
+                }
                 return a;
             case "input":
                 a = new DataInput(figura.x, figura.y);
                 a.text = figura.text;
                 a.bg_color = figura.bg_color;
+                for(j in figura.adj_shapes){
+                    let b = recover(figura.adj_shapes[j]);
+                    recovered_adj.push(b);
+                }
                 return a;
             case "output":
                 a = new DataOutput(figura.x, figura.y);
                 a.text = figura.text;
                 a.bg_color = figura.bg_color;
+                for(j in figura.adj_shapes){
+                    let b = recover(figura.adj_shapes[j]);
+                    recovered_adj.push(b);
+                }
                 return a;
             case "assigment":
                 a = new Assignment(figura.x, figura.y);
                 a.text = figura.text;
                 a.bg_color = figura.bg_color;
+                for(j in figura.adj_shapes){
+                    let b = recover(figura.adj_shapes[j]);
+                    recovered_adj.push(b);
+                }
                 return a;
             case "if":
                 a = new IfShape(figura.x, figura.y);
@@ -210,6 +235,10 @@ function recover(figura){
                 a.trueValue = figura.trueValue;
                 a.falseValue = figura.falseValue;
                 a.connector = figura.connector;
+                for(j in figura.adj_shapes){
+                    let b = recover(figura.adj_shapes[j]);
+                    recovered_adj.push(b);
+                }
                 return a;
             default:
                 a = new WhileShape(figura.x, figura.y);
@@ -219,6 +248,10 @@ function recover(figura){
                 a.falseValue = figura.falseValue;
                 a.cicle = figura.cicle;
                 a.connector = figura.connector;
+                for(j in figura.adj_shapes){
+                    let b = recover(figura.adj_shapes[j]);
+                    recovered_adj.push(b);
+                }
                 return a;
         }
 }
