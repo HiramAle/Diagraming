@@ -255,3 +255,43 @@ function recover(figura){
                 return a;
         }
 }
+
+//XML 
+function crearXML(){
+    var InputJSON = JSON.stringify(diagram);
+    var output = eval("OBJtoXML("+InputJSON+");")
+
+    var dataStr = "data:text/xml;charset=utf-8," + encodeURIComponent(output);
+    var link = document.createElement('a');
+    link.setAttribute('download', 'Diagrama.xml');
+    link.style.display = 'none';
+  
+    document.body.appendChild(link);
+      link.setAttribute('href', dataStr);
+      link.click();
+    document.body.removeChild(link);
+    
+    
+}
+
+//Convierte el  json en xml
+function OBJtoXML(obj) {
+    var xml = '';
+    for (var prop in obj) {
+      xml += obj[prop] instanceof Array ? '' : "<" + prop + ">";
+      if (obj[prop] instanceof Array) {
+        for (var array in obj[prop]) {
+          xml += "<" + prop + ">";
+          xml += OBJtoXML(new Object(obj[prop][array]));
+          xml += "</" + prop + ">";
+        }
+      } else if (typeof obj[prop] == "object") {
+        xml += OBJtoXML(new Object(obj[prop]));
+      } else {
+        xml += obj[prop];
+      }
+      xml += obj[prop] instanceof Array ? '' : "</" + prop + ">";
+    }
+    var xml = xml.replace(/<\/?[0-9]{1,}>/g, '');
+    return xml
+  }
