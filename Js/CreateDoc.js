@@ -277,6 +277,7 @@ function crearXML(){
 //Convierte el  json en xml
 function OBJtoXML(obj) {
     var xml = '';
+    xml += "<item>"
     for (var prop in obj) {
       xml += obj[prop] instanceof Array ? '' : "<" + prop + ">";
       if (obj[prop] instanceof Array) {
@@ -292,6 +293,7 @@ function OBJtoXML(obj) {
       }
       xml += obj[prop] instanceof Array ? '' : "</" + prop + ">";
     }
+    xml += "</item>"
     var xml = xml.replace(/<\/?[0-9]{1,}>/g, '');
     return xml
   }
