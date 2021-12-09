@@ -118,7 +118,7 @@ function recoveredSxml(xml_data, path, pathParte1, pathParte2){
                 a.bg_color = resultBg_color.childNodes[0].nodeValue; 
                 a.trueValue = resulttv.childNodes[0].nodeValue;
                 a.falseValue = resultfv.childNodes[0].nodeValue;
-                a.connector = resultConnector.childNodes[0].nodeValue;  
+                //a.connector = resultConnector.childNodes[0].nodeValue;  
                 path = "/item/item/adj_shapes/item/type|/item/item/adj_shapes/item/parent::adj_shapes";
                 pathParte1 = "/item/item/adj_shapes/item/";
                 pathParte2 = "|/item/item/adj_shapes/item/parent::adj_shapes";
@@ -136,7 +136,7 @@ function recoveredSxml(xml_data, path, pathParte1, pathParte2){
                 a.bg_color = resultBg_color.childNodes[0].nodeValue;
                 a.trueValue = resulttv.childNodes[0].nodeValue;
                 a.falseValue = resultfv.childNodes[0].nodeValue;
-                a.connector = resultConnector.childNodes[0].nodeValue;
+                //a.connector = resultConnector.childNodes[0].nodeValue;
                 a.cicle = resultCicle.childNodes[0].nodeValue;
                 path = "/item/item/adj_shapes/item/type|/item/item/adj_shapes/item/parent::adj_shapes";
                 pathParte1 = "/item/item/adj_shapes/item/";
@@ -257,7 +257,7 @@ function recoverShape(xml_data, path, pathParte1, pathParte2, count, count_while
                 a.bg_color = resultBg_color.childNodes[0].nodeValue; 
                 a.trueValue = resulttv.childNodes[0].nodeValue;
                 a.falseValue = resultfv.childNodes[0].nodeValue;
-                a.connector = resultConnector.childNodes[0].nodeValue;               
+                //a.connector = resultConnector.childNodes[0].nodeValue;               
                 return a;
             default :
                 a = new WhileShape(parseInt(resultX.childNodes[0].nodeValue), parseInt(resultY.childNodes[0].nodeValue));
@@ -265,7 +265,7 @@ function recoverShape(xml_data, path, pathParte1, pathParte2, count, count_while
                 a.bg_color = resultBg_color.childNodes[0].nodeValue;
                 a.trueValue = resulttv.childNodes[0].nodeValue;
                 a.falseValue = resultfv.childNodes[0].nodeValue;
-                a.connector = resultConnector.childNodes[0].nodeValue;
+                //a.connector = resultConnector.childNodes[0].nodeValue;
                 a.cicle = resultCicle.childNodes[0].nodeValue;
                 return a;
     }

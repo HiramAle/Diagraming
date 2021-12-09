@@ -7,6 +7,11 @@ let diagram = [shapes, connectors];
 
 // Crea y  descarga y los archivos .json
 function crearJ(){
+    for(var i=0; i< connectors.length; i++)
+    {
+        if(connectors[i].start_shape.adj_shapes[0].connector != undefined)
+            connectors[i].start_shape.adj_shapes[0].connector = '';
+    }
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(diagram));
     var link = document.createElement('a');
     link.setAttribute('download', 'Diagrama.json');
@@ -258,6 +263,11 @@ function recover(figura){
 
 //XML 
 function crearXML(){
+    for(var i=0; i< connectors.length; i++)
+    {
+        if(connectors[i].start_shape.adj_shapes[0].connector != undefined)
+            connectors[i].start_shape.adj_shapes[0].connector = '';
+    }
     var InputJSON = JSON.stringify(diagram);
     var output = eval("OBJtoXML("+InputJSON+");")
 
