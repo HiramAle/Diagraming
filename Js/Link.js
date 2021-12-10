@@ -12,7 +12,7 @@ let endIndex;
 function Link(start_shape, end_shape) {
     this.start_shape = start_shape;
     this.end_shape = end_shape;
-    this.type = "normal";
+    this.type = "normalLink";
 }
 
 Link.prototype.draw = function (ctx) {
