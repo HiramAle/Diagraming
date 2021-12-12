@@ -308,12 +308,12 @@ WhileShape.prototype.draw = function (ctx) {
         ctx.fill();
     }
     //Draw Circle True
-    if (this.trueValue == null) {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y + this.height / 2, 10, 0, 2 * Math.PI);
-        ctx.fillStyle = "#00ffff";
-        ctx.fill();
-    }
+    //if (this.trueValue == null) {
+        //ctx.beginPath();
+        //ctx.arc(this.x, this.y + this.height / 2, 10, 0, 2 * Math.PI);
+        //ctx.fillStyle = "#00ffff";
+        //ctx.fill();
+    //}
     //Draw Circle Cicle
     if (this.cicle == null) {
         ctx.beginPath();
